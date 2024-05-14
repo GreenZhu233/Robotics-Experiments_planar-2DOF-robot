@@ -48,7 +48,7 @@ end
 %% 在直边上生成点
 function [points, size, remain] = straightLine(startP, len, d, direction)
 % start:起始位置 len:线段长度 d:点的距离 direction:点生成方向([;]) remain:剩余的长度
-    size = floor(len / d);
+    size = floor(len / d) + 1;
     remain = mod(len, d);
     points = zeros(size, 2);
     pos = startP;
@@ -62,7 +62,7 @@ end
 function [points, size, remain] = arc(cx, cy, R, startA, endA, d, direction)
 % cx:圆心横坐标 cy:圆心纵坐标 R:半径 startA:起始角度 endA:重点角度 d:点的距离 direction:方向(1 or -1)
     len = R * (endA - startA);
-    size = floor(len / d);
+    size = floor(len / d) + 1;
     remain = mod(len, d);
     points = zeros(size, 2);
     theta = startA;
