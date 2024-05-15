@@ -1,5 +1,5 @@
 function points = createRectangle(lx,ly,R,Mx,My,d)
-%CREATERECTANGLE 此处显示有关此函数的摘要
+%CREATERECTANGLE 创建一个由等距点表示的圆角矩形
 %   lx为矩形的宽，ly为矩形的高，R为圆角半径，Mx和My为矩形中心坐标，d为相邻两点的距离
     % 下边
     startP = [Mx-lx/2+R; My-ly/2];
