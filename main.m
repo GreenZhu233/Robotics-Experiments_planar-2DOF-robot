@@ -8,8 +8,8 @@ d = 1;      % 相邻两C点的距离
 trace = createRectangle(lx, ly, R, Mx, My, d);
 
 %% 杆长赋值
-r1 = 236;
-r2 = 80;
+r1 = 170;
+r2 = 150;
 r3 = r2;
 r4 = r1;
 
@@ -17,17 +17,17 @@ r4 = r1;
 x = trace(:,1);
 y = trace(:,2);
 
-% % 左臂+左臂
-% theta_2 = asin((x.^2 + y.^2 + r2^2 - r1^2)./(2*r2*sqrt(x.^2 + y.^2))) - atan2(x,y);
-% theta_1 = acos((x - r2*cos(theta_2)) ./ r1);
-% theta_3 = acos((r4^2 - r3^2 - y.^2 - (x-250).^2)./(2*r3*sqrt((x-250).^2+y.^2))) + atan2(y,x-250);
-% theta_4 = asin((-y - r3*sin(theta_3)) ./ r4);
-
-% 左臂+右臂
+% 左臂+左臂
 theta_2 = asin((x.^2 + y.^2 + r2^2 - r1^2)./(2*r2*sqrt(x.^2 + y.^2))) - atan2(x,y);
 theta_1 = acos((x - r2*cos(theta_2)) ./ r1);
-theta_3 = -acos((r4^2 - r3^2 - y.^2 - (x-250).^2)./(2*r3*sqrt((x-250).^2+y.^2))) + atan2(y,x-250);
-theta_4 = -acos((250 - x - r3*cos(theta_3)) ./ r4);
+theta_3 = acos((r4^2 - r3^2 - y.^2 - (x-250).^2)./(2*r3*sqrt((x-250).^2+y.^2))) + atan2(y,x-250);
+theta_4 = asin((-y - r3*sin(theta_3)) ./ r4);
+
+% 左臂+右臂
+% theta_2 = asin((x.^2 + y.^2 + r2^2 - r1^2)./(2*r2*sqrt(x.^2 + y.^2))) - atan2(x,y);
+% theta_1 = acos((x - r2*cos(theta_2)) ./ r1);
+% theta_3 = -acos((r4^2 - r3^2 - y.^2 - (x-250).^2)./(2*r3*sqrt((x-250).^2+y.^2))) + atan2(y,x-250);
+% theta_4 = -acos((250 - x - r3*cos(theta_3)) ./ r4);
 
 %% 正运动学求各点坐标
 size = length(x);      % 数据量
@@ -42,8 +42,10 @@ C2 = D - [r3*cos(theta_3), r3*sin(theta_3)];
 v = 10;     % C点运动速度
 delta_t = d / v;
 timeSeries = (0 : delta_t : (size-1)*delta_t)';     % 生成时间序列
-link1 = [timeSeries, theta_1];          % 杆1角度
-link4 = [timeSeries, theta_4 + pi];     % 杆4角度(将相对D点的角度转化为相对E点的角度)
+initial = [theta_1(1) * 180/pi; theta_4(1) * 180/pi + 180];    % 杆1和杆4的初始角度(将杆4相对D点的角度转化为相对E点的角度)
+link1 = [timeSeries, theta_1 * 180/pi - initial(1)];          % 杆1相对转动角度
+link4 = [timeSeries, theta_4 * 180/pi + 180 - initial(2)];     % 杆4相对转动角度
+fprintf("杆1初始角：%.8f, 杆4初始角：%.8f\n", initial(1), initial(2));
 writematrix(link1, "link1.csv");
 writematrix(link4, "link4.csv");
 
@@ -52,7 +54,7 @@ createGif(trace, A, B, C1, C2, D, E);
 
 %% 生成动画Gif
 function createGif(trace, A, B, C1, C2, D, E)
-    filename = 'MatlabAnimation.gif';
+    filename = 'MatlabAnimation3.gif';
     figure('Position', [100, 100, 800, 800]);
     size = length(trace);
     for i = 1:size
