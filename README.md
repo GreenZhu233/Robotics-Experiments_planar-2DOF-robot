@@ -1,10 +1,10 @@
 # 平面二自由度机器人设计
 
 ### 要求
-![示意图](https://img2.imgtp.com/2024/05/14/8r8jWgv4.jpg)
+![示意图](https://s2.loli.net/2024/06/03/3fAbiINkoWB7TxK.png)
 如图设计一个平面五连杆机构，杆1和杆4为主动杆，使C点的运动轨迹为一个圆角矩形。
 
-![参数要求](https://img2.imgtp.com/2024/05/14/FDDuPIic.png)
+![参数要求](https://s2.loli.net/2024/06/03/n57FfCkZLWMe8Rz.png)
 其中 Lx = 79mm， Ly = 104mm，圆角半径 R = 10mm， C点运动速度 10mm/s
 
 ### 解法
@@ -18,4 +18,4 @@
 
 ### 效果
 
-![效果图](https://img2.imgtp.com/2024/05/20/if6jrwjn.gif)
+![效果图](https://s2.loli.net/2024/06/03/JR3kzjw7DY85IdG.gif)
